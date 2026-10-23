@@ -1,0 +1,18 @@
+# TATA CONSULTANCY SERVICES LIMITED
+## Annual Report 2023-24 (Excerpt)
+**Reporting Period:** Fiscal Year ended March 31, 2024 (FY2024)
+**Currency:** INR in Crores | Consolidated Ind AS Financial Statements
+
+### Strategic Highlights & Management Discussion (Page 24)
+Tata Consultancy Services (TCS) crossed the milestone of INR 240,000 crore in revenue, closing FY24 at INR 240,893 crore, a growth of 6.84% over FY23. Operating margin expanded to 24.63%, delivering an operating profit of INR 59,324 crore. Net profit for the year grew 8.92% to reach INR 45,908 crore.
+
+Growth was driven by strong expansion in the United Kingdom and emerging markets, alongside resilience in manufacturing, healthcare, and energy verticals. TCS secured an all-time high annual order book with a total contract value (TCV) of $42.7 billion. TCS launched AI WisdomNext, an aggregation platform for generative AI models, positioning the company as a leader in enterprise-scale AI implementations.
+
+### Cash Flow & Balance Sheet Strength (Page 236)
+Cash flow from operations reached INR 44,342 crore, representing a cash conversion of 96.6% of net profit. Free cash flow was INR 40,882 crore, reflecting disciplined capital expenditure of INR 3,460 crore. Net debt remained negative, with total cash and investments exceeding INR 50,000 crore against lease obligations of INR 8,924 crore.
+
+### Risk Factors and Uncertainties (Page 88)
+1. Geopolitical Uncertainties and Trade Protections: Geopolitical instability and shifts in visa regulations in primary markets (US H-1B, UK Skilled Worker visas) increase delivery friction and local subcontracting costs.
+2. Demand Volatility in Banking and Financial Services: The BFSI vertical accounts for approximately 31% of revenue; protracted sluggishness in regional banking budgets could suppress incremental deal conversions.
+3. Rapid Technology Transformation: Acceleration of Generative AI, agentic architectures, and autonomous coding tools poses structural deflationary pressures on traditional application maintenance contracts unless coupled with proprietary IP platforms.
+4. Information Security and Third-Party Risk: Managing enterprise-wide cyber threats across hybrid work models requires stringent ongoing zero-trust compliance.

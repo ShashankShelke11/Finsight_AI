@@ -1,0 +1,18 @@
+# INFOSYS LIMITED
+## Integrated Annual Report 2023-24 (Excerpt)
+**Reporting Period:** Fiscal Year ended March 31, 2024 (FY2024)
+**Currency:** INR in Crores | Consolidated Ind AS Financial Statements
+
+### Strategic Highlights & Management Discussion (Page 18)
+In FY24, Infosys delivered resilient financial performance amidst macroeconomic uncertainties and cautious client discretionary spending in North America and Europe. Total revenue from operations reached INR 153,670 crore, representing a year-over-year revenue growth of 4.7% in INR terms. Operating margin stood at 20.60%, with operating profit recorded at INR 31,661 crore. Net profit for the year expanded to INR 26,233 crore.
+
+The company witnessed strong traction in digital transformation, with cloud capabilities spearheaded by Infosys Cobalt and enterprise AI solutions under Infosys Topaz. Large deal total contract value (TCV) was the highest ever at $17.7 billion, with net new deals contributing 54%.
+
+### Cash Flow and Capital Allocation (Page 164)
+Operating cash flow for FY24 was robust at INR 25,655 crore, converting to over 97.8% of net profit. Free cash flow stood at INR 22,914 crore after accounting for capital expenditure of INR 2,741 crore. The Board recommended a total dividend of INR 46 per share for the fiscal year, in line with the capital return policy of returning over 85% of free cash flow over a five-year cycle.
+
+### Risk Factors and Uncertainties (Page 64)
+1. Macroeconomic Exposure: Client concentration and delayed decision-making in financial services and retail verticals could exert downward pressure on billing rates and realization.
+2. Talent Retention and Wage Inflation: While voluntary LTM attrition declined significantly to 12.6% in FY24 from 20.9% in FY23, wage revisions and localized hiring in onshore delivery centers impact operating margins.
+3. Currency Volatility: Fluctuations in major operating currencies (USD, EUR, GBP, AUD) against the Indian Rupee directly affect revenue realizations and operating cash flows. Cross-currency hedges are actively maintained.
+4. AI Disruption and Cybersecurity: Rapid emergence of generative AI and algorithmic automation necessitates continuous workforce retraining and introduces evolving client data privacy requirements under EU AI Act and India DPDP Act.
