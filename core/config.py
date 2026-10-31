@@ -69,6 +69,9 @@ class Settings:
     )
 
     # Vector & Retrieval
+    USE_MOCK_EMBEDDINGS: bool = field(
+        default_factory=lambda: _parse_bool(os.getenv("USE_MOCK_EMBEDDINGS", "true"))
+    )
     EMBEDDING_MODEL_NAME: str = field(
         default_factory=lambda: os.getenv(
             "EMBEDDING_MODEL_NAME", "sentence-transformers/all-MiniLM-L6-v2"

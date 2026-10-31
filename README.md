@@ -97,8 +97,14 @@ finsight-ai/
 ├── scripts/
 │   └── seed_sample_data.py      # Database population CLI script
 ├── tests/
-│   ├── test_database.py         # Schema and seeding unit tests
-│   └── test_security.py         # Security & guardrail unit tests
+├── tests/
+│   ├── test_database.py           # Schema and seeding unit tests
+│   ├── test_security.py           # Security & guardrail unit tests
+│   ├── test_ingestion_cleaner.py  # Text cleaning & normalization unit tests
+│   ├── test_ingestion_chunker.py  # Structure-aware & table chunking unit tests
+│   ├── test_ingestion_loader.py   # Multi-format document loader unit tests (PDF, DOCX, CSV)
+│   ├── test_vector_retrieval.py   # Embedding & cosine similarity unit tests
+│   └── test_ingestion_pipeline.py # End-to-end ingestion & vector retrieval integration tests
 ├── .env.example
 ├── pyproject.toml
 ├── requirements.txt
@@ -117,8 +123,8 @@ finsight-ai/
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/your-username/finsight-ai.git
-cd finsight-ai
+git clone https://github.com/ShashankShelke11/FinSight_AI.git
+cd FinSight_AI
 
 # 2. Set up virtual environment
 python -m venv .venv
@@ -134,28 +140,55 @@ cp .env.example .env
 # 4. Initialize and Seed the Database with Sample Data
 python scripts/seed_sample_data.py
 
-# 5. Run the Test Suite
+# 5. Run the Test Suite (25 Tests)
 python -m unittest discover -s tests -p "test_*.py"
 ```
 
-### Production Setup (PostgreSQL + pgvector with Docker)
+### Document Ingestion & Vector Retrieval Quickstart
 
-```bash
-# 1. Start PostgreSQL with pgvector
-docker compose up -d postgres
+```python
+from ingestion.pipeline import pipeline
+from retrieval.search_engine import search_engine
 
-# 2. Update .env:
-# DATABASE_URL=postgresql://finsight_user:finsight_secret@localhost:5432/finsight_db
+# 1. Ingest an annual report (PDF, DOCX, TXT, CSV)
+result = pipeline.ingest_file(
+    filepath="data/sample/reports/infy_fy2024_excerpt.txt",
+    company_ticker="INFY",
+    fiscal_year=2024,
+    reporting_period="FY2024",
+)
+print(f"Ingested {result.title}: {result.chunks_created} chunks indexed.")
 
-# 3. Seed PostgreSQL database
-python scripts/seed_sample_data.py
+# 2. Execute Baseline Vector Retrieval
+response = search_engine.search(
+    query="large deal total contract value TCV Cobalt Topaz",
+    top_k=3,
+    ticker="INFY",
+)
+for res in response.results:
+    print(f"[{res.score:.4f}] {res.source_reference}:\n{res.content[:200]}...\n")
 ```
 
 ---
 
-## 4. Key Financial Capabilities
+## 4. Key Financial & Technical Capabilities
 
 - **Zero-Hallucination Math**: All ratios (Operating Margin, Net Margin, Current Ratio, Debt-to-Equity, FCF, ROE, ROIC) and YoY growth rates are evaluated deterministically in Python.
-- **Traceable Provenance**: Every financial fact links to an exact filing name, fiscal year, reporting period, and page number.
+- **Traceable Provenance**: Every financial fact and retrieved chunk links to an exact filing name, fiscal year, reporting period, section, and page number.
+- **Structure-Aware Chunking**: Intelligently identifies headings (`##`), disclosure notes, and preserves financial tables without tearing rows.
+- **Multi-Format Extraction**: Parses PDFs (via `pymupdf`), Word docs (via `python-docx`), CSVs, and plain text with automatic duplicate detection via SHA-256 hashes.
+- **Dense Vector Search**: Generates 384-dimensional unit-normalized embeddings with cosine similarity querying and metadata filtering.
 - **Adversarial Hardening**: Untrusted annual report content is isolated from LLM system prompts; injection payloads are detected and neutralized.
-- **Hybrid Retrieval**: Dense semantic similarity search combined with sparse keyword search via Reciprocal Rank Fusion (RRF) and Cross-Encoder reranking.
+
+---
+
+## 5. Implementation Roadmap
+
+- [x] **Phase 1: Foundation & Architecture** (Database schema, seeder, security guardrails, models)
+- [x] **Phase 2: Document Ingestion & Baseline Vector RAG** (PyMuPDF/DOCX extraction, cleaner, structure-aware chunker, dense vector store, retrieval engine, 25 tests passing)
+- [ ] **Phase 3: Hybrid Retrieval & Cross-Encoder Reranking** (Dense + FTS keyword search + Reciprocal Rank Fusion + Cross-Encoder reranker)
+- [ ] **Phase 4: Deterministic Financial Calculation Engine** (Python financial analytics engine with division-by-zero guards)
+- [ ] **Phase 5: LangGraph Agent Orchestration & Citation Verification** (Query planner, retriever, calculator, verifier, refiner, synthesizer, citation validator)
+- [ ] **Phase 6: Golden Benchmark Evaluation Suite & Observability** (Recall@5, MRR, calculation accuracy, citation precision benchmarks)
+- [ ] **Phase 7: FastAPI Endpoints & Streamlit Dashboard** (Interactive Plotly visualizations and report export)
+- [ ] **Phase 8: Docker, CI/CD, Documentation & Portfolio Highlights** (Containerization, GitHub Actions, portfolio showcase)
