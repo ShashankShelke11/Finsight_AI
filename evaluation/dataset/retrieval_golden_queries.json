@@ -1,0 +1,82 @@
+[
+  {
+    "id": "q1",
+    "query": "Infosys Cobalt cloud capabilities and Topaz generative AI",
+    "company_ticker": "INFY",
+    "fiscal_year": 2024,
+    "expected_keywords": ["Cobalt", "Topaz", "cloud", "AI"],
+    "target_section": "Strategic Highlights & Management Discussion"
+  },
+  {
+    "id": "q2",
+    "query": "TCS AI WisdomNext platform aggregation for enterprise generative AI",
+    "company_ticker": "TCS",
+    "fiscal_year": 2024,
+    "expected_keywords": ["WisdomNext", "generative AI", "order book"],
+    "target_section": "Strategic Highlights & Management Discussion"
+  },
+  {
+    "id": "q3",
+    "query": "Infosys operating cash flow free cash flow capital expenditure capex dividend",
+    "company_ticker": "INFY",
+    "fiscal_year": 2024,
+    "expected_keywords": ["25,655", "22,914", "2,741", "dividend"],
+    "target_section": "Cash Flow and Capital Allocation"
+  },
+  {
+    "id": "q4",
+    "query": "TCS cash flow conversion balance sheet negative net debt",
+    "company_ticker": "TCS",
+    "fiscal_year": 2024,
+    "expected_keywords": ["44,342", "40,882", "3,460", "negative"],
+    "target_section": "Cash Flow & Balance Sheet Strength"
+  },
+  {
+    "id": "q5",
+    "query": "Infosys major risk factors EU AI Act India DPDP talent wage inflation attrition",
+    "company_ticker": "INFY",
+    "fiscal_year": 2024,
+    "expected_keywords": ["attrition", "DPDP", "wage", "currency"],
+    "target_section": "Risk Factors and Uncertainties"
+  },
+  {
+    "id": "q6",
+    "query": "TCS risk factors BFSI client demand geopolitical visa regulations H-1B",
+    "company_ticker": "TCS",
+    "fiscal_year": 2024,
+    "expected_keywords": ["BFSI", "visa", "H-1B", "geopolitical"],
+    "target_section": "Risk Factors and Uncertainties"
+  },
+  {
+    "id": "q7",
+    "query": "Infosys total contract value TCV large deal wins net new deals",
+    "company_ticker": "INFY",
+    "fiscal_year": 2024,
+    "expected_keywords": ["17.7 billion", "54%", "TCV"],
+    "target_section": "Strategic Highlights & Management Discussion"
+  },
+  {
+    "id": "q8",
+    "query": "TCS total contract value TCV annual order book United Kingdom expansion",
+    "company_ticker": "TCS",
+    "fiscal_year": 2024,
+    "expected_keywords": ["42.7 billion", "United Kingdom", "order book"],
+    "target_section": "Strategic Highlights & Management Discussion"
+  },
+  {
+    "id": "q9",
+    "query": "Infosys operating profit margin revenue Ind AS 20.60%",
+    "company_ticker": "INFY",
+    "fiscal_year": 2024,
+    "expected_keywords": ["153,670", "31,661", "20.60%"],
+    "target_section": "Strategic Highlights & Management Discussion"
+  },
+  {
+    "id": "q10",
+    "query": "TCS operating margin operating profit 59,324 crore 24.63%",
+    "company_ticker": "TCS",
+    "fiscal_year": 2024,
+    "expected_keywords": ["240,893", "59,324", "24.63%"],
+    "target_section": "Strategic Highlights & Management Discussion"
+  }
+]

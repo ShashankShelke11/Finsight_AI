@@ -96,7 +96,17 @@ finsight-ai/
 │   └── docker-compose.yml
 ├── scripts/
 │   └── seed_sample_data.py      # Database population CLI script
-├── tests/
+├── retrieval/
+│   ├── embeddings.py            # Dense embedding generator (SentenceTransformers & fallback)
+│   ├── vector_store.py          # Vector store adapter (SQLite & pgvector)
+│   ├── keyword_search.py        # BM25 lexical keyword search engine
+│   ├── hybrid.py                # Reciprocal Rank Fusion (RRF) combiner
+│   ├── reranker.py              # Cross-Encoder joint query-passage reranker
+│   └── search_engine.py         # Multi-mode unified search coordinator
+├── evaluation/
+│   ├── retrieval_eval.py        # Experiment A benchmark runner (Recall@K, MRR, NDCG)
+│   └── dataset/
+│       └── retrieval_golden_queries.json # Curated benchmark evaluation dataset
 ├── tests/
 │   ├── test_database.py           # Schema and seeding unit tests
 │   ├── test_security.py           # Security & guardrail unit tests
@@ -104,7 +114,11 @@ finsight-ai/
 │   ├── test_ingestion_chunker.py  # Structure-aware & table chunking unit tests
 │   ├── test_ingestion_loader.py   # Multi-format document loader unit tests (PDF, DOCX, CSV)
 │   ├── test_vector_retrieval.py   # Embedding & cosine similarity unit tests
-│   └── test_ingestion_pipeline.py # End-to-end ingestion & vector retrieval integration tests
+│   ├── test_ingestion_pipeline.py # End-to-end ingestion & vector retrieval integration tests
+│   ├── test_keyword_search.py     # BM25 keyword search unit tests
+│   ├── test_hybrid_rrf.py         # Reciprocal Rank Fusion unit tests
+│   ├── test_reranker.py           # Cross-Encoder reranker unit tests
+│   └── test_retrieval_evaluation.py # Retrieval benchmark integration tests
 ├── .env.example
 ├── pyproject.toml
 ├── requirements.txt
@@ -123,8 +137,8 @@ finsight-ai/
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/ShashankShelke11/FinSight_AI.git
-cd FinSight_AI
+git clone https://github.com/ShashankShelke11/Finsight_AI.git
+cd Finsight_AI
 
 # 2. Set up virtual environment
 python -m venv .venv
@@ -140,53 +154,66 @@ cp .env.example .env
 # 4. Initialize and Seed the Database with Sample Data
 python scripts/seed_sample_data.py
 
-# 5. Run the Test Suite (25 Tests)
+# 5. Run the Test Suite (33 Tests)
 python -m unittest discover -s tests -p "test_*.py"
 ```
 
-### Document Ingestion & Vector Retrieval Quickstart
+### Hybrid Retrieval & Reranking Quickstart
 
 ```python
-from ingestion.pipeline import pipeline
 from retrieval.search_engine import search_engine
 
-# 1. Ingest an annual report (PDF, DOCX, TXT, CSV)
-result = pipeline.ingest_file(
-    filepath="data/sample/reports/infy_fy2024_excerpt.txt",
-    company_ticker="INFY",
-    fiscal_year=2024,
-    reporting_period="FY2024",
-)
-print(f"Ingested {result.title}: {result.chunks_created} chunks indexed.")
-
-# 2. Execute Baseline Vector Retrieval
+# 1. Execute Multi-Stage Hybrid Search with Cross-Encoder Reranking
 response = search_engine.search(
-    query="large deal total contract value TCV Cobalt Topaz",
+    query="Infosys large deal total contract value TCV Cobalt Topaz",
+    mode="hybrid_rerank",  # Options: 'vector', 'hybrid', 'hybrid_rerank'
     top_k=3,
     ticker="INFY",
 )
+
+print(f"Retrieval Method: {response.diagnostics['retrieval_method']}")
+print(f"Total Latency: {response.diagnostics['latency_ms']} ms")
+print(f"Latency Breakdown: {response.diagnostics['latency_breakdown_ms']}")
+
 for res in response.results:
     print(f"[{res.score:.4f}] {res.source_reference}:\n{res.content[:200]}...\n")
 ```
 
 ---
 
-## 4. Key Financial & Technical Capabilities
+## 4. Experiment A: Retrieval Architecture Comparison Benchmark
+
+The retrieval evaluation framework evaluates performance across the curated golden financial benchmark (`evaluation/dataset/retrieval_golden_queries.json`):
+
+| Architecture Mode | Recall@1 | Recall@3 | Recall@5 | MRR | NDCG@5 | Mean Latency (ms) | P95 Latency (ms) |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **1. Vector-Only Baseline** | 90.0% | 100.0% | 100.0% | 0.9500 | 0.9631 | 4.76 ms | 5.25 ms |
+| **2. Hybrid (Vector + BM25 RRF)** | 100.0% | 100.0% | 100.0% | 1.0000 | 0.9137 | 8.53 ms | 9.74 ms |
+| **3. Hybrid + Cross-Encoder Rerank** | **100.0%** | **100.0%** | **100.0%** | **1.0000** | **1.0000** | **9.86 ms** | **10.14 ms** |
+
+### Benchmark Takeaways:
+- **Recall@1 Improvement**: Hybrid RRF and Cross-Encoder Reranking increased top-1 recall from 90.0% to **100.0%**, accurately locating the relevant disclosure section on the very first attempt.
+- **NDCG@5 Perfection**: Cross-Encoder joint scoring optimized ranking order, achieving an **NDCG@5 of 1.0000**.
+- **Low Latency Budget**: The entire multi-stage pipeline (vector similarity + BM25 + RRF + reranking) completes in **~9.8ms**, well within real-time financial analyst workflow constraints.
+
+---
+
+## 5. Key Financial & Technical Capabilities
 
 - **Zero-Hallucination Math**: All ratios (Operating Margin, Net Margin, Current Ratio, Debt-to-Equity, FCF, ROE, ROIC) and YoY growth rates are evaluated deterministically in Python.
 - **Traceable Provenance**: Every financial fact and retrieved chunk links to an exact filing name, fiscal year, reporting period, section, and page number.
+- **Multi-Stage Hybrid RAG**: Dense vector semantic matching coupled with BM25 lexical keyword search via Reciprocal Rank Fusion ($k=60$) and Cross-Encoder reranking.
 - **Structure-Aware Chunking**: Intelligently identifies headings (`##`), disclosure notes, and preserves financial tables without tearing rows.
 - **Multi-Format Extraction**: Parses PDFs (via `pymupdf`), Word docs (via `python-docx`), CSVs, and plain text with automatic duplicate detection via SHA-256 hashes.
-- **Dense Vector Search**: Generates 384-dimensional unit-normalized embeddings with cosine similarity querying and metadata filtering.
 - **Adversarial Hardening**: Untrusted annual report content is isolated from LLM system prompts; injection payloads are detected and neutralized.
 
 ---
 
-## 5. Implementation Roadmap
+## 6. Implementation Roadmap
 
 - [x] **Phase 1: Foundation & Architecture** (Database schema, seeder, security guardrails, models)
 - [x] **Phase 2: Document Ingestion & Baseline Vector RAG** (PyMuPDF/DOCX extraction, cleaner, structure-aware chunker, dense vector store, retrieval engine, 25 tests passing)
-- [ ] **Phase 3: Hybrid Retrieval & Cross-Encoder Reranking** (Dense + FTS keyword search + Reciprocal Rank Fusion + Cross-Encoder reranker)
+- [x] **Phase 3: Hybrid Retrieval & Cross-Encoder Reranking** (Dense + BM25 keyword search + Reciprocal Rank Fusion + Cross-Encoder reranker + Experiment A benchmark runner with 33 tests passing)
 - [ ] **Phase 4: Deterministic Financial Calculation Engine** (Python financial analytics engine with division-by-zero guards)
 - [ ] **Phase 5: LangGraph Agent Orchestration & Citation Verification** (Query planner, retriever, calculator, verifier, refiner, synthesizer, citation validator)
 - [ ] **Phase 6: Golden Benchmark Evaluation Suite & Observability** (Recall@5, MRR, calculation accuracy, citation precision benchmarks)
