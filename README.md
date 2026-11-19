@@ -154,7 +154,7 @@ cp .env.example .env
 # 4. Initialize and Seed the Database with Sample Data
 python scripts/seed_sample_data.py
 
-# 5. Run the Test Suite (33 Tests)
+# 5. Run the Full Test Suite (53 Tests Passing)
 python -m unittest discover -s tests -p "test_*.py"
 ```
 
@@ -198,7 +198,36 @@ The retrieval evaluation framework evaluates performance across the curated gold
 
 ---
 
-## 5. Key Financial & Technical Capabilities
+## 5. Deterministic Financial Calculation Engine & Formulations
+
+FinSight AI strictly prevents LLM hallucination of numerical figures by running all financial math through a deterministic Python calculation engine with accounting comparability guards, scale alignment, and zero-denominator handling:
+
+- **Year-over-Year (YoY) Revenue Growth (%)**:
+  $$\text{YoY Growth} = \frac{\text{Revenue}_t - \text{Revenue}_{t-1}}{\text{Revenue}_{t-1}} \times 100$$
+- **Operating Margin (%)**:
+  $$\text{Operating Margin} = \frac{\text{Operating Income}}{\text{Revenue}} \times 100$$
+- **Net Profit Margin (%)**:
+  $$\text{Net Profit Margin} = \frac{\text{Net Income}}{\text{Revenue}} \times 100$$
+- **Free Cash Flow (FCF)**:
+  $$\text{FCF} = \text{Operating Cash Flow} - \text{Capital Expenditures (Capex)}$$
+- **FCF Conversion Ratio (%)**:
+  $$\text{FCF Conversion} = \frac{\text{Free Cash Flow}}{\text{Net Income}} \times 100$$
+- **Current Ratio**:
+  $$\text{Current Ratio} = \frac{\text{Current Assets}}{\text{Current Liabilities}}$$
+- **Debt-to-Equity Ratio (D/E)**:
+  $$\text{D/E} = \frac{\text{Total Debt}}{\text{Total Equity}}$$
+- **Return on Equity (ROE) (%)**:
+  $$\text{ROE} = \frac{\text{Net Income}}{\text{Average or Total Equity}} \times 100$$
+- **Return on Invested Capital (ROIC) (%)**:
+  $$\text{ROIC} = \frac{\text{Operating Income} \times (1 - \text{Effective Tax Rate})}{\text{Total Debt} + \text{Total Equity}} \times 100$$
+- **Compound Annual Growth Rate (CAGR) (%)**:
+  $$\text{CAGR} = \left(\left(\frac{V_{\text{final}}}{V_{\text{initial}}}\right)^{\frac{1}{n}} - 1\right) \times 100$$
+
+All formulas preserve lineage through `CalculatedMetricResult` objects tracking `inputs`, `formula`, `unit`, `is_valid`, `caveats`, and exact `CitationReference` records.
+
+---
+
+## 6. Key Financial & Technical Capabilities
 
 - **Zero-Hallucination Math**: All ratios (Operating Margin, Net Margin, Current Ratio, Debt-to-Equity, FCF, ROE, ROIC) and YoY growth rates are evaluated deterministically in Python.
 - **Traceable Provenance**: Every financial fact and retrieved chunk links to an exact filing name, fiscal year, reporting period, section, and page number.
@@ -209,12 +238,12 @@ The retrieval evaluation framework evaluates performance across the curated gold
 
 ---
 
-## 6. Implementation Roadmap
+## 7. Implementation Roadmap
 
 - [x] **Phase 1: Foundation & Architecture** (Database schema, seeder, security guardrails, models)
 - [x] **Phase 2: Document Ingestion & Baseline Vector RAG** (PyMuPDF/DOCX extraction, cleaner, structure-aware chunker, dense vector store, retrieval engine, 25 tests passing)
 - [x] **Phase 3: Hybrid Retrieval & Cross-Encoder Reranking** (Dense + BM25 keyword search + Reciprocal Rank Fusion + Cross-Encoder reranker + Experiment A benchmark runner with 33 tests passing)
-- [ ] **Phase 4: Deterministic Financial Calculation Engine** (Python financial analytics engine with division-by-zero guards)
+- [x] **Phase 4: Deterministic Financial Calculation Engine** (Tested Python arithmetic, unit normalization, accounting comparability validator, multi-year scorecard generator, and multi-company comparison with 53 tests passing)
 - [ ] **Phase 5: LangGraph Agent Orchestration & Citation Verification** (Query planner, retriever, calculator, verifier, refiner, synthesizer, citation validator)
 - [ ] **Phase 6: Golden Benchmark Evaluation Suite & Observability** (Recall@5, MRR, calculation accuracy, citation precision benchmarks)
 - [ ] **Phase 7: FastAPI Endpoints & Streamlit Dashboard** (Interactive Plotly visualizations and report export)
