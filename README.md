@@ -154,7 +154,7 @@ cp .env.example .env
 # 4. Initialize and Seed the Database with Sample Data
 python scripts/seed_sample_data.py
 
-# 5. Run the Full Test Suite (53 Tests Passing)
+# 5. Run the Full Test Suite (63 Tests Passing)
 python -m unittest discover -s tests -p "test_*.py"
 ```
 
@@ -244,7 +244,7 @@ All formulas preserve lineage through `CalculatedMetricResult` objects tracking 
 - [x] **Phase 2: Document Ingestion & Baseline Vector RAG** (PyMuPDF/DOCX extraction, cleaner, structure-aware chunker, dense vector store, retrieval engine, 25 tests passing)
 - [x] **Phase 3: Hybrid Retrieval & Cross-Encoder Reranking** (Dense + BM25 keyword search + Reciprocal Rank Fusion + Cross-Encoder reranker + Experiment A benchmark runner with 33 tests passing)
 - [x] **Phase 4: Deterministic Financial Calculation Engine** (Tested Python arithmetic, unit normalization, accounting comparability validator, multi-year scorecard generator, and multi-company comparison with 53 tests passing)
-- [ ] **Phase 5: LangGraph Agent Orchestration & Citation Verification** (Query planner, retriever, calculator, verifier, refiner, synthesizer, citation validator)
+- [x] **Phase 5: LangGraph Agent Orchestration & Citation Verification** (StateGraph workflow, query planner, hybrid evidence retriever, deterministic financial tool, evidence verifier, bounded query refiner, evidence-grounded synthesizer, and citation validator with 63 tests passing)
 - [ ] **Phase 6: Golden Benchmark Evaluation Suite & Observability** (Recall@5, MRR, calculation accuracy, citation precision benchmarks)
 - [ ] **Phase 7: FastAPI Endpoints & Streamlit Dashboard** (Interactive Plotly visualizations and report export)
 - [ ] **Phase 8: Docker, CI/CD, Documentation & Portfolio Highlights** (Containerization, GitHub Actions, portfolio showcase)

@@ -11,8 +11,46 @@ from __future__ import annotations
 
 import re
 import html
+from enum import Enum
 from pathlib import Path
 from core.exceptions import PromptInjectionDetected
+
+
+class SecurityRiskLevel(str, Enum):
+    LOW = "low"
+    MEDIUM = "medium"
+    HIGH = "high"
+
+
+class SecurityCheckResult:
+    def __init__(
+        self,
+        is_safe: bool,
+        risk_level: SecurityRiskLevel = SecurityRiskLevel.LOW,
+        flagged_reasons: list[str] | None = None,
+    ):
+        self.is_safe = is_safe
+        self.risk_level = risk_level
+        self.flagged_reasons = flagged_reasons or []
+
+
+class SecurityGuardrails:
+    """Enterprise security gate inspecting prompts, context isolation, and file uploads."""
+
+    @staticmethod
+    def sanitize_user_prompt(text: str) -> tuple[str, SecurityCheckResult]:
+        cleaned = sanitize_text(text)
+        is_injection = check_prompt_injection(cleaned)
+        if is_injection:
+            return cleaned, SecurityCheckResult(
+                False,
+                SecurityRiskLevel.HIGH,
+                ["Suspected prompt injection or jailbreak detected."],
+            )
+        return cleaned, SecurityCheckResult(True, SecurityRiskLevel.LOW, [])
+
+
+guardrails = SecurityGuardrails()
 
 # Known prompt injection & jailbreak patterns often encountered in documents or adversarial prompts
 INJECTION_PATTERNS = [

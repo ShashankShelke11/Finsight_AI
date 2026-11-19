@@ -71,6 +71,10 @@ class DatabaseManager:
         else:
             self._init_postgres()
 
+    def init_schema(self) -> None:
+        """Alias for init_db."""
+        self.init_db()
+
     def _init_sqlite(self) -> None:
         """Creates tables in SQLite with equivalent structure to PostgreSQL schema."""
         sqlite_ddl = """

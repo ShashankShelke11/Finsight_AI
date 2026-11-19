@@ -55,3 +55,4 @@ def setup_logger(name: str = "finsight") -> logging.Logger:
 
 
 logger = setup_logger("finsight")
+get_logger = setup_logger
